@@ -45,4 +45,7 @@ ACDC
       └── labels
 ```
 
-In train.py and predict.py, custom parameters are provided, which users can change according to their needs. In fact, the parameters are pre-configured by default, so train.py and predict.py can be run directly.
+In train.py and predict.py, custom parameters are provided, which users can change according to their needs. In fact, the parameters are pre-configured by default, so *train.py* and *predict.py* can be run directly.
+
+Data augmentation is used in our code, thus it may take some time to load the dataset, if you do not want to use it, you could modify the parser setting in *train.py*, setting 'aug' to False.
+

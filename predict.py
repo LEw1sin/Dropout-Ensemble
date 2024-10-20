@@ -15,13 +15,8 @@ import argparse
 import os
 import matplotlib.pyplot as plt
 import SimpleITK as sitk
-from scipy.spatial.distance import directed_hausdorff
-from sklearn.metrics import roc_curve, auc
-from itertools import cycle
-from scipy.interpolate import interp1d
 from utils.initialize import setup_logging
-from scipy import stats
-from medpy.metric.binary import hd, dc
+from medpy.metric.binary import hd
 
 def compute_hausdorff_distance(pred, label_slice):
     hausdorff_distances = []
@@ -58,7 +53,6 @@ def main(args,net):
 
     net = net.to(device)
     net.eval()
-    print(args)
     image_transform = transforms.Compose([
         ImageTransform(),
         lambda x: torch.tensor(x, dtype=torch.float32)
@@ -181,16 +175,20 @@ def main(args,net):
 
 
 if __name__ == "__main__":
+    file_path = os.path.abspath(__file__)
+    dir_path = os.path.dirname(file_path)
+    os.chdir(dir_path)
     parser = argparse.ArgumentParser(description="Predicting")
     parser.add_argument('--gpu', default=0, type=int, help='GPU id to use')
     parser.add_argument('--device', default='cuda', type=str, help='device to use for training / testing')
-    parser.add_argument('--net_weights', default='./mm_weights_3unet', type=str, help='net weights path')
+    parser.add_argument('--net_weights', default='./ACDC_weights_3unet', type=str, help='net weights path')
     parser.add_argument('--log_file_path', default='./predict.log', type=str, help='training log path')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
     parser.add_argument('--acdc_path', default='./ACDC/test', type=str, help='the directory of acdc')
     parser.add_argument('--mm_path', default='./MM/ED/test', type=str, help='the directory of mm') #change ED or ES
     parser.add_argument('--dataset_mode', default='ACDC', type=str, help='choose which dataset to use')
     parser.add_argument('--predicted_directory', default='./ACDC_predict', type=str, help='the directory of predicted directory')
+    parser.add_argument('--max_channel', default=512, type=int, help='the maximum number of channels')
     args = parser.parse_args()
     setup_logging(args.log_file_path)
     weight_list = [0.33,0.33,0.33]

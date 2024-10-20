@@ -24,7 +24,6 @@ def main(args,net):
         raise EnvironmentError("not find GPU device for training.")
 
     init_distributed_mode(args=args)
-    logging.info(args)
 
     rank = args.rank
     device = torch.device(args.device)
@@ -197,6 +196,7 @@ def load_dataset(args):
                 target_width=target_width,
                 image_transform=image_transform, 
                 label_transform=label_transform,
+                aug=args.aug
             )
             val_dataset = MedicalImageDataset(
                 acdc_folder=args.acdc_path,
@@ -206,7 +206,8 @@ def load_dataset(args):
                 target_height=target_height,
                 target_width=target_width,
                 image_transform=image_transform, 
-                label_transform=label_transform
+                label_transform=label_transform,
+                aug=args.aug
             )
         elif args.dataset_mode == 'MM':
             train_dataset = MedicalImageDataset(
@@ -218,6 +219,7 @@ def load_dataset(args):
                 target_width=target_width,
                 image_transform=image_transform, 
                 label_transform=label_transform,
+                aug=args.aug
             )
             val_dataset = MedicalImageDataset(
                 mm_folder=args.mm_path,
@@ -227,7 +229,8 @@ def load_dataset(args):
                 target_height=target_height,
                 target_width=target_width,
                 image_transform=image_transform, 
-                label_transform=label_transform
+                label_transform=label_transform,
+                aug=args.aug
             )
         else:
             raise ValueError(f"dataset_mode {args.dataset_mode} is not supported")
@@ -237,6 +240,9 @@ def load_dataset(args):
             
 
 if __name__ == "__main__":
+    file_path = os.path.abspath(__file__)
+    dir_path = os.path.dirname(file_path)
+    os.chdir(dir_path)
     parser = argparse.ArgumentParser(description="Distributed Training")
     parser.add_argument('--world_size', default=1, type=int, help='number of nodes for distributed training')
     parser.add_argument('--rank', default=0, type=int, help='node rank for distributed training')
@@ -248,8 +254,8 @@ if __name__ == "__main__":
     parser.add_argument('--channel_weights', nargs='+', type=float, default=[1.0, 2.0, 1.0, 1.0], help='Channel weights')
     parser.add_argument('--batch_size', default=8, type=int, help='input batch size for training')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
-    parser.add_argument('--pretrained_weights', default='./mm_weights_3unet', type=str, help='pretrained weights path')
-    parser.add_argument('--net_weights', default='./mm_weights_3unet', type=str, help='net weights path')
+    parser.add_argument('--pretrained_weights', default='./MM_weights_3unet', type=str, help='pretrained weights path')
+    parser.add_argument('--net_weights', default='./MM_weights_3unet', type=str, help='net weights path')
     parser.add_argument('--log_file_path', default='./training.log', type=str, help='training log path')
     parser.add_argument('--lr', default=1e-5, type=float, help='learning rate')
     parser.add_argument('--epochs', default=100, type=int, help='training and testing epochs')
@@ -259,10 +265,11 @@ if __name__ == "__main__":
     parser.add_argument('--target_width', default=256, type=int, help='the size of unified image width')
     parser.add_argument('--acdc_path', default='./ACDC', type=str, help='the directory of acdc')
     parser.add_argument('--mm_path', default='./MM', type=str, help='the directory of mm')
-    parser.add_argument('--dataset_mode', default='ACDC', type=str, help='choose which dataset to use')
+    parser.add_argument('--dataset_mode', default='MM', type=str, help='choose which dataset to use')
     parser.add_argument('--max_channel', default=512, type=int, help='the maximum number of channels')
     parser.add_argument('--l2_norm', default=1e-7, type=float, help='the coefficient of l2 norm')
     parser.add_argument('--patience', default=15, type=float, help='the patience of early stop')
+    parser.add_argument('--aug', default=True, type=bool, help='whether to use data augmentation')
     args = parser.parse_args()
     setup_logging(args.log_file_path)
     weight_list = [0.33,0.33,0.33]
