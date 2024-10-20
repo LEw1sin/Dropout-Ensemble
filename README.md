@@ -1,6 +1,6 @@
 # I. Clarity
 
-It is the code repository of our paper "*A Simple Ensemble Learning Implementation in Ventricle Semantic Segmentation*".
+It is the code repository of our paper "*Lightweight Ensemble Learning Enhances Cardiac MRI Segmentation Performance*".
 
 # II. Usage
 
