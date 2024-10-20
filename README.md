@@ -49,3 +49,4 @@ In train.py and predict.py, custom parameters are provided, which users can chan
 
 Data augmentation is used in our code, thus it may take some time to load the dataset, if you do not want to use it, you could modify the parser setting in *train.py*, setting 'aug' to False.
 
+The training, validation, and testing procedure are conducted on the two datasets respectively, so it is sufficient to have files in just one directory. You could modify the parser setting in *train.py*, setting 'dataset_mode' to 'ACDC' if you want to use ACDC and to 'MM' if you want to use M&Ms.
