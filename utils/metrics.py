@@ -143,7 +143,6 @@ class Evaluator(object):
         self.weights = weights
         self.dice_coff = []
         self.confuse_matrix = self.compute_confuse_matrix()
-        self.vae = args.vae
         self.net = net
         self.l1_lambda = 1e-5
         
