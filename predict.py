@@ -26,9 +26,13 @@ def compute_hausdorff_distance(pred, label_slice):
         class_slice[pred == i] = pred[pred == i] 
         class_label = np.zeros_like(label_slice)
         class_label[label_slice == i] = label_slice[label_slice == i]
-        if class_label.max() != 0 and class_slice.max() != 0:
-            hausdorff_distance_class = hd(class_slice, class_label)
-            hausdorff_distances.append(hausdorff_distance_class)
+        if class_label.max() != 0:
+            if class_slice.max() == 0:
+                hausdorff_distance_class = 150
+                hausdorff_distances.append(hausdorff_distance_class)
+            else:
+                hausdorff_distance_class = hd(class_slice, class_label)
+                hausdorff_distances.append(hausdorff_distance_class)
         else:
             dummy_iter[i-1] += 1
             hausdorff_distance_class = 0
@@ -181,20 +185,19 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Predicting")
     parser.add_argument('--gpu', default=0, type=int, help='GPU id to use')
     parser.add_argument('--device', default='cuda', type=str, help='device to use for training / testing')
-    parser.add_argument('--net_weights', default='./ACDC_weights_3unet', type=str, help='net weights path')
+    parser.add_argument('--net_weights', default='/project/mm_direct/mm_weights_new_0.5unet_0.5unet_aug', type=str, help='net weights path')
     parser.add_argument('--log_file_path', default='./predict.log', type=str, help='training log path')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
     parser.add_argument('--acdc_path', default='./ACDC/test', type=str, help='the directory of acdc')
-    parser.add_argument('--mm_path', default='./MM/ED/test', type=str, help='the directory of mm') #change ED or ES
-    parser.add_argument('--dataset_mode', default='ACDC', type=str, help='choose which dataset to use')
-    parser.add_argument('--predicted_directory', default='./ACDC_predict', type=str, help='the directory of predicted directory')
-    parser.add_argument('--max_channel', default=512, type=int, help='the maximum number of channels')
+    parser.add_argument('--mm_path', default='./MM/ES/test', type=str, help='the directory of mm') #change ED or ES
+    parser.add_argument('--dataset_mode', default='MM', type=str, help='choose which dataset to use')
+    parser.add_argument('--predicted_directory', default='./MM_ES_predict', type=str, help='the directory of predicted directory')
+    parser.add_argument('--max_channel', default=256, type=int, help='the maximum number of channels')
     args = parser.parse_args()
     setup_logging(args.log_file_path)
-    weight_list = [0.33,0.33,0.33]
+    weight_list = [0.5,0.5]
     net = DE_framework(models=[UNet(num_classes = args.num_classes, max_channels=args.max_channel,),
-                               UNet(num_classes = args.num_classes, max_channels=args.max_channel,),
-                                UNet(num_classes = args.num_classes, max_channels=args.max_channel,)],
+                               UNet(num_classes = args.num_classes, max_channels=args.max_channel,),],
                                          weight_list=weight_list)
     num_cuda_devices = torch.cuda.device_count()
     logging.info(f"Let's use {num_cuda_devices} GPUs!")
