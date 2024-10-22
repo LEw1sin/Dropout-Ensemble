@@ -89,7 +89,8 @@ class UNet(nn.Module):
         self.down1 = Down(self.max_channels//8, self.max_channels//4)
         self.down2 = Down(self.max_channels//4, self.max_channels//2)
         self.down3 = Down(self.max_channels//2, self.max_channels)
-        self.down4 = Down(self.max_channels, self.max_channels, dropout=0.5)
+        self.down4 = Down(self.max_channels, self.max_channels)
+        self.dropout = nn.Dropout(0.5)
 
         self.up1 = Up(self.max_channels*2, self.max_channels//2, self.bilinear)
         self.up2 = Up(self.max_channels, self.max_channels//4, self.bilinear)
@@ -111,6 +112,9 @@ class UNet(nn.Module):
         x3 = self.down2(x2) 
         x4 = self.down3(x3) 
         x5 = self.down4(x4)
+        
+        x5 = self.dropout(x5)
+
         x = self.up1(x5, x4)
         x = self.up2(x, x3)
         x = self.up3(x, x2)

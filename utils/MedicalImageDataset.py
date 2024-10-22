@@ -22,9 +22,10 @@ class MedicalImageDataset(Dataset):
         self.image_slices_index = 0
         self.label_slices_index = 0
         self.argumentation_type = []
+        self.dataset_mode = dataset_mode
 
         try:
-            if dataset_mode == 'ACDC':
+            if self.dataset_mode == 'ACDC':
                 acdc_folder = os.path.join(acdc_folder, train_valid)
                 self.acdc_image_folder = os.path.join(acdc_folder, 'images')
                 self.acdc_label_folder = os.path.join(acdc_folder, 'labels')
@@ -33,7 +34,7 @@ class MedicalImageDataset(Dataset):
                 self.image_slices = torch.empty((total_slices,) + image_shape, dtype=torch.float32)
                 self.label_slices = torch.empty((total_slices,) + image_shape, dtype=torch.float32)
                 self._load_silices(self.acdc_image_folder, self.acdc_label_folder)
-            elif dataset_mode == 'MM':
+            elif self.dataset_mode == 'MM':
                 self.mm_ED_folder = os.path.join(mm_folder, 'ED')
                 self.mm_ED_folder = os.path.join(self.mm_ED_folder, train_valid)
                 self.mm_ED_image_folder = os.path.join(self.mm_ED_folder, 'images')
@@ -68,7 +69,9 @@ class MedicalImageDataset(Dataset):
                     image = sitk.ReadImage(image_path)
                     image_array = sitk.GetArrayFromImage(image)
                     image_array = image_array.astype(np.float32)
-
+ 
+                    if self.dataset_mode == 'MM':
+                        filename = filename.replace('.nii.gz', '_gt.nii.gz')
                     label_path = os.path.join(label_folder, filename)
                     label = sitk.ReadImage(label_path)
                     label_array = sitk.GetArrayFromImage(label)

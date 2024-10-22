@@ -223,7 +223,6 @@ class ASPP(nn.Module):
         feature_cat = torch.cat(
             [conv1x1, conv3x3_1, conv3x3_2, conv3x3_3, global_feature], dim=1)
         result = self.conv_cat(feature_cat)
-        result = F.dropout(result, p=0.5, training=True)
         return result
 
 
@@ -252,11 +251,13 @@ class DeepLab_V3_plus(nn.Module):
             nn.ReLU(inplace=True),
         )
         self.cls_conv = nn.Conv2d(256, num_classes, 1, stride=1)
+        self.dropout = nn.Dropout(0.5)
 
     def forward(self, x):
         H, W = x.size(2), x.size(3)
         low_level_features, x = self.backbone(x)
         x = self.aspp(x)
+        x = self.dropout(x)
         low_level_features = self.shortcut_conv(low_level_features)
 
         x = F.interpolate(x, size=(low_level_features.size(
