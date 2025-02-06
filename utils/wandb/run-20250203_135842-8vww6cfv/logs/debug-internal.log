@@ -1,0 +1,10 @@
+{"time":"2025-02-03T13:58:42.829488724+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.4","symlink path":"/data2/lyw/deunet_mem_based/utils/wandb/run-20250203_135842-8vww6cfv/logs/debug-core.log"}
+{"time":"2025-02-03T13:58:42.942425486+08:00","level":"INFO","msg":"created new stream","id":"8vww6cfv"}
+{"time":"2025-02-03T13:58:42.942457856+08:00","level":"INFO","msg":"stream: started","id":"8vww6cfv"}
+{"time":"2025-02-03T13:58:42.942516756+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"8vww6cfv"}
+{"time":"2025-02-03T13:58:42.942555245+08:00","level":"INFO","msg":"handler: started","stream_id":"8vww6cfv"}
+{"time":"2025-02-03T13:58:42.942796595+08:00","level":"INFO","msg":"sender: started","stream_id":"8vww6cfv"}
+{"time":"2025-02-03T13:58:43.245795949+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-03T13:59:36.270956574+08:00","level":"INFO","msg":"stream: closing","id":"8vww6cfv"}
+{"time":"2025-02-03T13:59:36.270992934+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-03T13:59:36.271726853+08:00","level":"INFO","msg":"Stopped system monitor"}

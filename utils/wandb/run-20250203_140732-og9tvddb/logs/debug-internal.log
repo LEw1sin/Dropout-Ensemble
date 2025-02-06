@@ -1,0 +1,15 @@
+{"time":"2025-02-03T14:07:32.340156931+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.4","symlink path":"/data2/lyw/deunet_mem_based/utils/wandb/run-20250203_140732-og9tvddb/logs/debug-core.log"}
+{"time":"2025-02-03T14:07:32.45140268+08:00","level":"INFO","msg":"created new stream","id":"og9tvddb"}
+{"time":"2025-02-03T14:07:32.45144479+08:00","level":"INFO","msg":"stream: started","id":"og9tvddb"}
+{"time":"2025-02-03T14:07:32.45151337+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"og9tvddb"}
+{"time":"2025-02-03T14:07:32.45156153+08:00","level":"INFO","msg":"sender: started","stream_id":"og9tvddb"}
+{"time":"2025-02-03T14:07:32.45166939+08:00","level":"INFO","msg":"handler: started","stream_id":"og9tvddb"}
+{"time":"2025-02-03T14:07:32.757381583+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-04T01:50:19.192811235+08:00","level":"INFO","msg":"stream: closing","id":"og9tvddb"}
+{"time":"2025-02-04T01:50:19.192929445+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-04T01:50:19.194140645+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-04T01:50:20.743603896+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-04T01:50:21.059359614+08:00","level":"INFO","msg":"handler: closed","stream_id":"og9tvddb"}
+{"time":"2025-02-04T01:50:21.059426414+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"og9tvddb"}
+{"time":"2025-02-04T01:50:21.059454224+08:00","level":"INFO","msg":"sender: closed","stream_id":"og9tvddb"}
+{"time":"2025-02-04T01:50:21.059545994+08:00","level":"INFO","msg":"stream: closed","id":"og9tvddb"}

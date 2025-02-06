@@ -1,0 +1,19 @@
+{"time":"2025-02-04T21:42:50.19551082+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.4","symlink path":"/data2/lyw/deunet_mem_based/utils/wandb/run-20250204_214249-p8iwn9dw/logs/debug-core.log"}
+{"time":"2025-02-04T21:42:50.317441907+08:00","level":"INFO","msg":"created new stream","id":"p8iwn9dw"}
+{"time":"2025-02-04T21:42:50.317471267+08:00","level":"INFO","msg":"stream: started","id":"p8iwn9dw"}
+{"time":"2025-02-04T21:42:50.317543816+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"p8iwn9dw"}
+{"time":"2025-02-04T21:42:50.317588026+08:00","level":"INFO","msg":"sender: started","stream_id":"p8iwn9dw"}
+{"time":"2025-02-04T21:42:50.317705846+08:00","level":"INFO","msg":"handler: started","stream_id":"p8iwn9dw"}
+{"time":"2025-02-04T21:42:50.726449541+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-05T00:17:37.9875423+08:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-02-05T00:27:08.031561088+08:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-02-05T00:28:01.636954771+08:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lew1sin-national-university-of-singapore/DEUNET/p8iwn9dw/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-02-05T00:37:23.110225926+08:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-02-05T03:24:46.425110818+08:00","level":"INFO","msg":"stream: closing","id":"p8iwn9dw"}
+{"time":"2025-02-05T03:24:46.425151578+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-05T03:24:46.426332117+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-05T03:24:48.767461162+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-05T03:24:49.048582401+08:00","level":"INFO","msg":"handler: closed","stream_id":"p8iwn9dw"}
+{"time":"2025-02-05T03:24:49.048635161+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"p8iwn9dw"}
+{"time":"2025-02-05T03:24:49.048663261+08:00","level":"INFO","msg":"sender: closed","stream_id":"p8iwn9dw"}
+{"time":"2025-02-05T03:24:49.048731621+08:00","level":"INFO","msg":"stream: closed","id":"p8iwn9dw"}

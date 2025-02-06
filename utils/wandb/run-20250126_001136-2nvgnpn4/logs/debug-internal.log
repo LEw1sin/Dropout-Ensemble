@@ -1,0 +1,7 @@
+{"time":"2025-01-26T00:11:36.858911366+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.4","symlink path":"/data2/lyw/deunet_mem_based/utils/wandb/run-20250126_001136-2nvgnpn4/logs/debug-core.log"}
+{"time":"2025-01-26T00:11:36.969484095+08:00","level":"INFO","msg":"created new stream","id":"2nvgnpn4"}
+{"time":"2025-01-26T00:11:36.969523055+08:00","level":"INFO","msg":"stream: started","id":"2nvgnpn4"}
+{"time":"2025-01-26T00:11:36.969548025+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"2nvgnpn4"}
+{"time":"2025-01-26T00:11:36.969566964+08:00","level":"INFO","msg":"handler: started","stream_id":"2nvgnpn4"}
+{"time":"2025-01-26T00:11:36.969562234+08:00","level":"INFO","msg":"sender: started","stream_id":"2nvgnpn4"}
+{"time":"2025-01-26T00:11:37.33520578+08:00","level":"INFO","msg":"Starting system monitor"}

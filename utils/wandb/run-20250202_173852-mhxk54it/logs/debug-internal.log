@@ -1,0 +1,17 @@
+{"time":"2025-02-02T17:38:53.108299052+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.4","symlink path":"/data2/lyw/deunet_mem_based/utils/wandb/run-20250202_173852-mhxk54it/logs/debug-core.log"}
+{"time":"2025-02-02T17:38:53.222686831+08:00","level":"INFO","msg":"created new stream","id":"mhxk54it"}
+{"time":"2025-02-02T17:38:53.222719411+08:00","level":"INFO","msg":"stream: started","id":"mhxk54it"}
+{"time":"2025-02-02T17:38:53.222790731+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"mhxk54it"}
+{"time":"2025-02-02T17:38:53.222819691+08:00","level":"INFO","msg":"sender: started","stream_id":"mhxk54it"}
+{"time":"2025-02-02T17:38:53.222874611+08:00","level":"INFO","msg":"handler: started","stream_id":"mhxk54it"}
+{"time":"2025-02-02T17:38:53.532843652+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-02T23:19:39.907125837+08:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-02-02T23:39:12.478996765+08:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lew1sin-national-university-of-singapore/DEUNET/mhxk54it/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-02-03T03:39:17.894028618+08:00","level":"INFO","msg":"stream: closing","id":"mhxk54it"}
+{"time":"2025-02-03T03:39:17.894118047+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-03T03:39:17.939205858+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-03T03:39:19.424788126+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-03T03:39:19.668690485+08:00","level":"INFO","msg":"handler: closed","stream_id":"mhxk54it"}
+{"time":"2025-02-03T03:39:19.668757215+08:00","level":"INFO","msg":"sender: closed","stream_id":"mhxk54it"}
+{"time":"2025-02-03T03:39:19.668746715+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"mhxk54it"}
+{"time":"2025-02-03T03:39:19.668856775+08:00","level":"INFO","msg":"stream: closed","id":"mhxk54it"}

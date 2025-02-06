@@ -1,0 +1,20 @@
+{"time":"2025-02-03T14:00:39.106690713+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.4","symlink path":"/data2/lyw/deunet_mem_based/utils/wandb/run-20250203_140038-52l50jzz/logs/debug-core.log"}
+{"time":"2025-02-03T14:00:39.216849756+08:00","level":"INFO","msg":"created new stream","id":"52l50jzz"}
+{"time":"2025-02-03T14:00:39.216885406+08:00","level":"INFO","msg":"stream: started","id":"52l50jzz"}
+{"time":"2025-02-03T14:00:39.216949996+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"52l50jzz"}
+{"time":"2025-02-03T14:00:39.216980606+08:00","level":"INFO","msg":"sender: started","stream_id":"52l50jzz"}
+{"time":"2025-02-03T14:00:39.218319963+08:00","level":"INFO","msg":"handler: started","stream_id":"52l50jzz"}
+{"time":"2025-02-03T14:00:39.606414604+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-03T14:59:09.735596311+08:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-02-03T17:13:54.931653299+08:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-02-04T02:11:27.890189247+08:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lew1sin-national-university-of-singapore/DEUNET/52l50jzz/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-02-04T06:10:25.385541785+08:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lew1sin-national-university-of-singapore/DEUNET/52l50jzz/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-02-04T07:51:26.690120239+08:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-02-04T09:42:15.257623972+08:00","level":"INFO","msg":"stream: closing","id":"52l50jzz"}
+{"time":"2025-02-04T09:42:15.257691122+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-04T09:42:15.25867481+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-04T09:42:16.807418352+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-04T09:42:17.118123376+08:00","level":"INFO","msg":"handler: closed","stream_id":"52l50jzz"}
+{"time":"2025-02-04T09:42:17.118197426+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"52l50jzz"}
+{"time":"2025-02-04T09:42:17.118203436+08:00","level":"INFO","msg":"sender: closed","stream_id":"52l50jzz"}
+{"time":"2025-02-04T09:42:17.118358526+08:00","level":"INFO","msg":"stream: closed","id":"52l50jzz"}

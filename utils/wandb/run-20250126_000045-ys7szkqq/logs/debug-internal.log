@@ -1,0 +1,7 @@
+{"time":"2025-01-26T00:00:45.826423351+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.4","symlink path":"/data2/lyw/deunet_mem_based/utils/wandb/run-20250126_000045-ys7szkqq/logs/debug-core.log"}
+{"time":"2025-01-26T00:00:45.93752755+08:00","level":"INFO","msg":"created new stream","id":"ys7szkqq"}
+{"time":"2025-01-26T00:00:45.93756766+08:00","level":"INFO","msg":"stream: started","id":"ys7szkqq"}
+{"time":"2025-01-26T00:00:45.93759939+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"ys7szkqq"}
+{"time":"2025-01-26T00:00:45.937636459+08:00","level":"INFO","msg":"sender: started","stream_id":"ys7szkqq"}
+{"time":"2025-01-26T00:00:45.937714099+08:00","level":"INFO","msg":"handler: started","stream_id":"ys7szkqq"}
+{"time":"2025-01-26T00:00:46.31568482+08:00","level":"INFO","msg":"Starting system monitor"}
