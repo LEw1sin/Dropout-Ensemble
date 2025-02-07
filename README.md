@@ -92,7 +92,6 @@ The model checkpoints with the numeric performance claimed in our paper can be d
 └──  MnMs_3UNetlinear_Uncertainty
     ├── training.log
     └── *.pth
-
 ```
 
 The following are the settings in ``predict.py`` to reproduce the results of Table.3 in our paper:
