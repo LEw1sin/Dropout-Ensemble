@@ -22,7 +22,8 @@ The recommended rough sketch of the file directory is as follows:
 ├── de_logistics
     ├── ACDC_2UNetlinear_02-02-16-35-56
     ├── eval_ACDC_2UNetlinear_02-05-11-19-24
-    └── MnMs_3UNetlinear_02-03-14-00-38
+    ├── MnMs_3UNetlinear_02-03-14-00-38
+    └── ···
 └── de_mem_based
     ├── model
     ├── utils
