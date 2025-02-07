@@ -170,9 +170,6 @@ if __name__ == "__main__":
     os.chdir(dir_path)
     parser = argparse.ArgumentParser(description="Predicting")
     parser.add_argument('--device', default='cuda:1', type=str, help='device to use for testing')
-    # parser.add_argument('--net_weights', default='../../de_logistics/ACDC_3UNetlinear_02-02-17-38-52', type=str, help='net weights path')
-    # parser.add_argument('--net_weights', default='../../de_logistics/ACDC_2UNetlinear_02-02-16-35-56', type=str, help='net weights path')
-    # parser.add_argument('--net_weights', default='../../de_logistics/MnMs_2UNetlinear_02-03-14-01-19', type=str, help='net weights path')
     parser.add_argument('--net_weights', default='../../de_logistics/ACDC_2UNetlinear_02-05-01-00-04', type=str, help='net weights path')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
     parser.add_argument('--dataset_mode', default='ACDC', type=str, help='choose which dataset to use')
@@ -189,6 +186,7 @@ if __name__ == "__main__":
     #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)])
     # net = DE_framework_linear(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
     #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)], weight_list=[0.7,0.3])
+    # net = DE_framework_Augmenting(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel)], weight_list=[1])
     net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
                                             UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
                                             UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe)])

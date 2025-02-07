@@ -174,7 +174,7 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size', default=8, type=int, help='input batch size for training')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
     parser.add_argument('--pretrained', default=False, type=bool, help='load pretrained model weights')
-    parser.add_argument('--pretrained_weights', default='./Synapse_weights_1u1d', type=str, help='pretrained weights path')
+    parser.add_argument('--pretrained_weights', default='./', type=str, help='pretrained weights path')
     parser.add_argument('--lr', default=1e-4, type=float, help='learning rate')
     parser.add_argument('--epochs', default=500, type=int, help='training and testing epochs')
     parser.add_argument('--warmup_epochs', default=10, type=int, help='training warmup epochs')

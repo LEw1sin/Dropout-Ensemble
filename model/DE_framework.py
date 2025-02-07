@@ -151,6 +151,95 @@ class DE_framework_mem(nn.Module):
             else:
                 print(f"Model file {load_path} does not exist!")
 
+import numpy as np
+from scipy import ndimage
+
+def random_rot_flip(image):
+    image = np.transpose(image, (1, 2, 0))
+    
+    k = np.random.randint(0, 4)  
+    image = np.rot90(image, k)
+
+    axis = np.random.randint(0, 2)
+    image = np.flip(image, axis=axis).copy()
+
+
+    image = np.transpose(image, (2, 0, 1))
+
+    return image, k, axis  
+
+def random_rotate(image):
+    angle = np.random.randint(-20, 20)
+    image = ndimage.rotate(image, angle, order=0, reshape=False)
+    
+    return image, angle  
+
+def inverse_random_rot_flip(image, k, axis):
+    image = np.rot90(image, 4 - k, axes=(2,3))
+
+    return image
+
+
+def inverse_random_rotate(image, angle):
+    image = ndimage.rotate(image, -angle, axes=(2,3), order=0, reshape=False)
+
+    return image
+
+class DE_framework_Augmenting(nn.Module):
+    def __init__(self, args, models, weight_list = None):  
+        super(DE_framework_Augmenting, self).__init__()
+        self.models = nn.ModuleList(models)  
+        self.model = self.models[0]
+        self.weight_list = 1
+        self.process = self.weighted_avg
+        self.num_classes = args.num_classes
+
+    def forward(self, x, valid_mask):
+        return self.process(x, valid_mask)
+    
+    def weighted_avg(self, img, valid_mask):
+        x = img[valid_mask].cpu().detach().numpy()
+        x_rot_flip, k, axis = random_rot_flip(x)
+        x_rotate, angle = random_rotate(x)
+
+        final_output = np.zeros((x.shape[0], self.num_classes, x.shape[1], x.shape[2]))  # Create new tensor with the required size
+
+        x_rot_flip = torch.from_numpy(x_rot_flip).to(img.device).unsqueeze(1)
+        x_rotate = torch.from_numpy(x_rotate).to(img.device).unsqueeze(1)
+        rot_flip_output = self.model(x_rot_flip)
+        # rot_flip_output = F.softmax(rot_flip_output, dim=1)
+        rot_flip_output = inverse_random_rot_flip(rot_flip_output.cpu().detach().numpy(), k, axis)
+        final_output += rot_flip_output
+
+        rotate_output = self.model(x_rotate)
+        # rotate_output = F.softmax(rotate_output, dim=1)
+        rotate_output = inverse_random_rotate(rotate_output.cpu().detach().numpy(), angle)
+        final_output += rotate_output
+
+        final_output = F.softmax(torch.from_numpy(final_output), dim=1)
+        return final_output
+    
+    def save_model(self, save_dir="models"):
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+        
+        for idx, model in enumerate(self.models):
+            model_name = f"{model.__class__.__name__}_{idx + 1}"
+            
+            save_path = os.path.join(save_dir, f"{model_name}.pth")
+            torch.save(model.state_dict(), save_path)
+
+    def load_model(self, load_dir="models"):
+        for idx, model in enumerate(self.models):
+            model_name = f"{model.__class__.__name__}_{idx + 1}"
+            
+            load_path = os.path.join(load_dir, f"{model_name}.pth")
+            
+            if os.path.exists(load_path):
+                model.load_state_dict(torch.load(load_path))
+            else:
+                print(f"Model file {load_path} does not exist!")
+
 
 if __name__ == "__main__":
     import argparse
