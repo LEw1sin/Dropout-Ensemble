@@ -52,6 +52,6 @@ def padding(image, target_z):
     padded_image = np.zeros((target_z, h, w), dtype=image.dtype)
     padded_image[:d] = image
     mask = np.zeros(target_z, dtype=int)
-    mask[:d] = 1  # 将有效的部分标记为 1
+    mask[:d] = 1  
     
     return padded_image, mask

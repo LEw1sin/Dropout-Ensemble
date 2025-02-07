@@ -129,52 +129,6 @@ class DE_framework_mem(nn.Module):
             final_output += weight*model_output.clone()
         final_output = F.softmax(final_output, dim=1)
         return final_output
-
-# def forward(self, img, valid_mask):
-#     B, D, H, W = img.size()
-#     img_ = img[valid_mask].unsqueeze(1)  # [valid_depth, 1, H, W]
-#     true_counts = valid_mask.sum(dim=1)  # [B]
-#     counts = true_counts.to(img.device)  # [B]
-#     valid_depth = img_.size(0)
-
-#     # 创建一个映射，每个有效样本对应其所属的批次索引
-#     batch_idx = torch.repeat_interleave(torch.arange(B, device=img.device), counts)  # [valid_depth]
-
-#     base_learner_outputs = []
-#     base_learner_preweights = []
-    
-#     for model in self.models:
-#         # 获取模型输出并应用 softmax
-#         base_learner_output = F.softmax(model(img_), dim=1)  # [valid_depth, num_classes, H, W]
-#         base_learner_outputs.append(base_learner_output)
-        
-#         # 计算每个批次的均值
-#         sample_mean = torch.zeros(B, base_learner_output.size(1), H, W, device=img.device)
-#         sample_mean = sample_mean.index_add(0, batch_idx, base_learner_output) / counts.view(B, 1, 1, 1)
-        
-#         # 计算每个批次的方差并应用指数函数
-#         sample_var = sample_mean.var(dim=1)  # [B, H, W]
-#         preweight = torch.exp(sample_var).unsqueeze(1).expand(-1, base_learner_output.size(1), -1, -1)  # [B, num_classes, H, W]
-        
-#         # 将权重映射回每个有效样本
-#         preweight_samples = preweight[batch_idx]  # [valid_depth, num_classes, H, W]
-#         base_learner_preweights.append(preweight_samples)
-
-#     # 堆叠所有模型的输出和权重
-#     base_learner_outputs = torch.stack(base_learner_outputs, dim=0)  # [num_models, valid_depth, num_classes, H, W]
-#     base_learner_preweights = torch.stack(base_learner_preweights, dim=0)  # [num_models, valid_depth, num_classes, H, W]
-    
-#     # 计算所有模型权重的总和
-#     sum_weight = torch.sum(base_learner_preweights, dim=0)  # [valid_depth, num_classes, H, W]
-    
-#     # 规范化每个模型的权重
-#     model_weights = base_learner_preweights / sum_weight  # [num_models, valid_depth, num_classes, H, W]
-    
-#     # 计算加权最终输出
-#     final_output = torch.sum(model_weights * base_learner_outputs, dim=0)  # [valid_depth, num_classes, H, W]
-#     final_output = F.softmax(final_output, dim=1)
-    
-#     return final_output
     
     def save_model(self, save_dir="models"):
         if not os.path.exists(save_dir):
@@ -196,6 +150,7 @@ class DE_framework_mem(nn.Module):
                 model.load_state_dict(torch.load(load_path, map_location='cpu', weights_only=True))
             else:
                 print(f"Model file {load_path} does not exist!")
+
 
 if __name__ == "__main__":
     import argparse

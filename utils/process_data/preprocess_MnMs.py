@@ -50,8 +50,6 @@ def process_train_eval_test(original_path, target_path, ref_dict, aug=False):
         case_name = os.path.basename(os.path.dirname(image_name))
         image = read_image(image_name)
         label = read_image(label_name)
-        # image = sitk.GetArrayFromImage(sitk.ReadImage(image_name))
-        # label = sitk.GetArrayFromImage(sitk.ReadImage(label_name))
 
         image = image.astype(np.float32)
         label = label.astype(np.int32)
@@ -101,13 +99,13 @@ ref_dict = {}
 for index, row in ref.iterrows():
     ref_dict[row['External code']] = {'ED': row['ED'], 'ES': row['ES']}
 
-# original_train_path = '../../../de_data/MnMs/Training' 
-# target_train_path = '../../../de_data/preprocessed_MnMs/train'   
-# process_train_eval_test(original_train_path, target_train_path, ref_dict, aug=True)
+original_train_path = '../../../de_data/MnMs/Training' 
+target_train_path = '../../../de_data/preprocessed_MnMs/train'   
+process_train_eval_test(original_train_path, target_train_path, ref_dict, aug=True)
 
-# original_eval_path = '../../../de_data/MnMs/Validation'
-# target_eval_path = '../../../de_data/preprocessed_MnMs/eval'
-# process_train_eval_test(original_eval_path, target_eval_path, ref_dict)
+original_eval_path = '../../../de_data/MnMs/Validation'
+target_eval_path = '../../../de_data/preprocessed_MnMs/eval'
+process_train_eval_test(original_eval_path, target_eval_path, ref_dict)
 
 original_test_path = '../../../de_data/MnMs/Testing'
 target_test_path = '../../../de_data/preprocessed_MnMs/test'

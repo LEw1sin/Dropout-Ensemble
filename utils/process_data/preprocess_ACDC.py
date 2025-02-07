@@ -4,22 +4,19 @@ import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import h5py
-import random
-import torch
-import torch.nn.functional as F
 from aug_utils import *
 
 sitk.ProcessObject_SetGlobalWarningDisplay(False)
-original_ACDC_image_path = '/../../../de_data/ACDC/images'
-original_ACDC_label_path = '/../../../de_data/ACDC/labels'
+original_ACDC_image_path = '../../../de_data/ACDC/images'
+original_ACDC_label_path = '../../../de_data/ACDC/labels'
 
 train_image_path = original_ACDC_image_path + '/train'
 train_label_path = original_ACDC_label_path + '/train'
 eval_image_path = original_ACDC_image_path + '/eval'
 eval_label_path = original_ACDC_label_path + '/eval'
 
-target_train_path = '/../../../de_data/preprocessed_ACDC/train'
-target_eval_path = '/../../../de_data/preprocessed_ACDC/eval'
+target_train_path = '../../../de_data/preprocessed_ACDC/train'
+target_eval_path = '../../../de_data/preprocessed_ACDC/eval'
 
 os.makedirs(target_train_path, exist_ok=True)
 os.makedirs(target_eval_path, exist_ok=True)
@@ -70,5 +67,22 @@ for eval_image_name, eval_label_name in tqdm(zip(os.listdir(eval_image_path), os
         f.create_dataset('label', data=label)
         f.create_dataset('mask', data=mask)
 
+
+def copy_folder_contents(src_folder, dst_folder):
+    import shutil
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    if not os.path.exists(dst_folder):
+        os.makedirs(dst_folder)  
+
+    for item in os.listdir(src_folder):
+        src_path = os.path.join(src_folder, item)
+        dst_path = os.path.join(dst_folder, item)
+
+        if os.path.isdir(src_path):
+            shutil.copytree(src_path, dst_path, dirs_exist_ok=True)  
+        else:
+            shutil.copy2(src_path, dst_path)  # 
+
+copy_folder_contents(target_eval_path, target_eval_path.replace('eval', 'test'))
 
 

@@ -164,16 +164,14 @@ def valid_epoch(args, net, valid_loader, device, epoch):
 
     return valid_losses, valid_acc
 
-            
-
 if __name__ == "__main__":
     file_path = os.path.abspath(__file__)
     dir_path = os.path.dirname(file_path)
     os.chdir(dir_path)
     parser = argparse.ArgumentParser(description="Training")
-    parser.add_argument('--device', default='cuda:1', type=str, help='device to use for training / testing')
+    parser.add_argument('--device', default='cuda:7', type=str, help='device to use for training / testing')
     parser.add_argument('--channel_weights', nargs='+', type=float, default=[1.0, 2.0, 1.0, 1.0], help='Channel weights')
-    parser.add_argument('--batch_size', default=2, type=int, help='input batch size for training')
+    parser.add_argument('--batch_size', default=8, type=int, help='input batch size for training')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
     parser.add_argument('--pretrained', default=False, type=bool, help='load pretrained model weights')
     parser.add_argument('--pretrained_weights', default='./Synapse_weights_1u1d', type=str, help='pretrained weights path')
@@ -189,33 +187,13 @@ if __name__ == "__main__":
     parser.add_argument('--ed_es_only', default='', type=str, help='test on ED or ES slices only')
     args = parser.parse_args()
 
-    # weight_list = [0.33,0.33,0.33]
-    # net = DE_framework(models=[UNet(num_classes = args.num_classes, max_channels=args.max_channel,),
-    #                            UNet(num_classes = args.num_classes, max_channels=args.max_channel,),
-    #                             UNet(num_classes = args.num_classes, max_channels=args.max_channel,)],
-    #                                      weight_list=weight_list)
-    # weight_list = [0.6, 0.4]
-    # net = DE_framework(args, models=[UNet(num_classes = args.num_classes, max_channels=args.max_channel,)
-    #                            ,DeepLab_V3_plus(num_classes = args.num_classes)],
-    #                                      weight_list=weight_list)
-    # weight_list = [0.5, 0.5]
+    # net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
+    #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)])
     # net = DE_framework_linear(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
-    #                                         UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),],
-    #                                      weight_list=weight_list)
-    # net = DE_framework_linear(args, models=[DeepLab_V3_plus_linear(num_classes = args.num_classes, max_channels=args.max_channel,)],
-    #                                      weight_list=weight_list)
-    # net = DE_framework_mem(args, models=[UNet_linear(num_classes = 4, max_channels=256),
-    #                                         DeepLabV3P_linear(num_classes = 4, max_channels=256)])
-    net = DE_framework_linear(args, models=[UNet_linear(num_classes = 4, max_channels=256),
-                                            DeepLabV3P_linear(num_classes = 4, max_channels=256)], weight_list=[0.7,0.3])
-    # net = DE_framework_mem(args, models=[UNet_linear(num_classes = 4, max_channels=256),
-    #                                         UNet_linear(num_classes = 4, max_channels=256),
-    #                                         UNet_linear(num_classes = 4, max_channels=256),])
-    
-    # net = DE_framework_mem(args, models=[UNet_linear(num_classes = 4, max_channels=256),
-    #                                         UNet_linear(num_classes = 4, max_channels=256),
-    #                                         UNet_linear(num_classes = 4, max_channels=256),
-    #                                         UNet_linear(num_classes = 4, max_channels=256),])
+    #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)], weight_list=[0.7,0.3])
+    net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
+                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
+                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe)])
     
     args.log_dir = get_log_dir(net, args.dataset_mode)
     args.log_file_path = os.path.join(args.log_dir, "training.log")

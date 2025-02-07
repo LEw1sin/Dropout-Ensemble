@@ -6,7 +6,7 @@ from tqdm import tqdm
 from utils.metrics import *
 from model.unet import UNet_linear, UNet_logvar
 from model.deeplabv3_plus import DeepLabV3P_linear, DeepLabV3P_logvar
-from model.DE_framework import DE_framework_linear, DE_framework_logvar, DE_framework_mem
+from model.DE_framework import DE_framework_linear, DE_framework_logvar, DE_framework_mem, DE_framework_Augmenting
 from model.tools import dense_crf
 import argparse
 import os
@@ -169,50 +169,29 @@ if __name__ == "__main__":
     dir_path = os.path.dirname(file_path)
     os.chdir(dir_path)
     parser = argparse.ArgumentParser(description="Predicting")
-    parser.add_argument('--device', default='cuda:0', type=str, help='device to use for testing')
+    parser.add_argument('--device', default='cuda:1', type=str, help='device to use for testing')
     # parser.add_argument('--net_weights', default='../../de_logistics/ACDC_3UNetlinear_02-02-17-38-52', type=str, help='net weights path')
     # parser.add_argument('--net_weights', default='../../de_logistics/ACDC_2UNetlinear_02-02-16-35-56', type=str, help='net weights path')
     # parser.add_argument('--net_weights', default='../../de_logistics/MnMs_2UNetlinear_02-03-14-01-19', type=str, help='net weights path')
-    parser.add_argument('--net_weights', default='../../de_logistics/MnMs_3UNetlinear_02-03-14-00-38', type=str, help='net weights path')
+    parser.add_argument('--net_weights', default='../../de_logistics/ACDC_2UNetlinear_02-05-01-00-04', type=str, help='net weights path')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
-    parser.add_argument('--dataset_mode', default='MnMs', type=str, help='choose which dataset to use')
+    parser.add_argument('--dataset_mode', default='ACDC', type=str, help='choose which dataset to use')
     parser.add_argument('--max_channel', default=256, type=int, help='the maximum number of channels')
     parser.add_argument('--cache', default=True, type=bool, help='whether to load the dataset into memory')
     parser.add_argument('--batch_size', default=4, type=int, help='input batch size for testing')
     parser.add_argument('--channel_weights', nargs='+', type=float, default=[1.0, 2.0, 1.0, 1.0], help='Channel weights')
-    parser.add_argument('--visualize', default=False, type=bool, help='whether to visualize the prediction')
+    parser.add_argument('--visualize', default=True, type=bool, help='whether to visualize the prediction')
     parser.add_argument('--end_coff_threshold', default=0.8, type=float, help='threshold for end slices confidence')
     parser.add_argument('--ed_es_only', default='', type=str, help='test on ED or ES slices only')
 
     args = parser.parse_args()
-    # weight_list = [0.33,0.33,0.33]
-    # net = DE_framework(models=[UNet(num_classes = args.num_classes, max_channels=args.max_channel,),
-    #                            UNet(num_classes = args.num_classes, max_channels=args.max_channel,),
-    #                             UNet(num_classes = args.num_classes, max_channels=args.max_channel,)],
-    #                                      weight_list=weight_list)
-    # weight_list = [0.5, 0.5]
+    # net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
+    #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)])
     # net = DE_framework_linear(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
-    #                                         UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),],
-    #                                      weight_list=weight_list)
-    # weight_list = [1]
-    # net = DE_framework_linear(args, models=[DeepLabV3P_linear(num_classes = 4, max_channels=256)],
-    #                                      weight_list=[1])
-    # net = DE_framework_linear(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
-    #                                         UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),],
-    #                                      weight_list=[0.5, 0.5])
-    # net = DE_framework_linear(args, models=[UNet_linear(num_classes = 4, max_channels=256),
-    #                                         DeepLabV3P_linear(num_classes = 4, max_channels=256)], weight_list=[0.7,0.3])
-    # net = DE_framework_linear(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
-    #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel),],
-    #                                      weight_list=[0.7, 0.3])
-    # net = DE_framework_mem(args, models=[UNet_linear(num_classes = 4, max_channels=256),
-    #                                         DeepLabV3P_linear(num_classes = 4, max_channels=256)])
-    # net = DE_framework_linear(args, models=[UNet_linear(num_classes = 4, max_channels=256),], weight_list=[1])
-    # net = DE_framework_mem(args, models=[UNet_linear(num_classes = 4, max_channels=256),
-    #                                         UNet_linear(num_classes = 4, max_channels=256),])
-    net = DE_framework_mem(args, models=[UNet_linear(num_classes = 4, max_channels=256),
-                                            UNet_linear(num_classes = 4, max_channels=256),
-                                            UNet_linear(num_classes = 4, max_channels=256),])
+    #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)], weight_list=[0.7,0.3])
+    net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
+                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
+                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe)])
     args.log_dir = get_log_dir(net, args.dataset_mode, train_eval='eval', ed_es_only=args.ed_es_only)
     args.log_file_path = os.path.join(args.log_dir, "predict.log")
     setup_logging(args.log_file_path)
