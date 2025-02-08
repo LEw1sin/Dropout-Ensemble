@@ -169,8 +169,8 @@ if __name__ == "__main__":
     dir_path = os.path.dirname(file_path)
     os.chdir(dir_path)
     parser = argparse.ArgumentParser(description="Predicting")
-    parser.add_argument('--device', default='cuda:1', type=str, help='device to use for testing')
-    parser.add_argument('--net_weights', default='../../de_logistics/ACDC_2UNetlinear_02-05-01-00-04', type=str, help='net weights path')
+    parser.add_argument('--device', default='cuda:0', type=str, help='device to use for testing')
+    parser.add_argument('--net_weights', default='../../de_logistics/ACDC_4UNetlinear_02-07-14-38-13', type=str, help='net weights path')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
     parser.add_argument('--dataset_mode', default='ACDC', type=str, help='choose which dataset to use')
     parser.add_argument('--max_channel', default=256, type=int, help='the maximum number of channels')
@@ -187,9 +187,9 @@ if __name__ == "__main__":
     # net = DE_framework_linear(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
     #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)], weight_list=[0.7,0.3])
     # net = DE_framework_Augmenting(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel)], weight_list=[1])
-    net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
-                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
-                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe)])
+    net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
+                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
+                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel)])
     args.log_dir = get_log_dir(net, args.dataset_mode, train_eval='eval', ed_es_only=args.ed_es_only)
     args.log_file_path = os.path.join(args.log_dir, "predict.log")
     setup_logging(args.log_file_path)
