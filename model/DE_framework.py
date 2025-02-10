@@ -1,12 +1,9 @@
 import torch
 import torch.nn as nn
 import os
-import torchprofile
-from .unet import UNet_linear, UNet_logvar
-from .deeplabv3_plus import DeepLabV3P_linear, DeepLabV3P_logvar
-import time
+from .unet import UNet_linear
+from .deeplabv3_plus import DeepLabV3P_linear
 import torch.nn.functional as F
-import functools
 
 class DE_framework_linear(nn.Module):
     def __init__(self, args, models=[UNet_linear(input_channel=1, num_classes=4), DeepLabV3P_linear(4)], weight_list = None):  
@@ -48,48 +45,6 @@ class DE_framework_linear(nn.Module):
             
             if os.path.exists(load_path):
                 model.load_state_dict(torch.load(load_path))
-            else:
-                print(f"Model file {load_path} does not exist!")
-
-class DE_framework_logvar(nn.Module):
-    def __init__(self, args, models=[UNet_linear(input_channel=1, num_classes=4), DeepLabV3P_linear(4)], weight_list = None):  
-        super(DE_framework_logvar, self).__init__()
-        self.models = nn.ModuleList(models)  
-        self.weight_list = weight_list
-        self.process = self.weighted_avg
-        self.num_classes = args.num_classes
-
-    def forward(self, x):
-        return self.process(x)
-    
-    def weighted_avg(self, x):
-        final_output = torch.zeros(x.size(0), self.num_classes, x.size(2), x.size(3)).to(x.device)  # Create new tensor with the required size
-        for model in self.models:
-            uncertainty_weights, model_output = model(x)
-            model_output = F.softmax(model_output, dim=1)
-            model_output = model_output * uncertainty_weights
-            final_output += model_output.clone()  # Add the cloned model output to avoid in-place operations on shared memory
-        final_output = F.softmax(final_output, dim=1)
-        return final_output
-    
-    def save_model(self, save_dir="models"):
-        if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
-        
-        for idx, model in enumerate(self.models):
-            model_name = f"{model.__class__.__name__}_{idx + 1}"
-            
-            save_path = os.path.join(save_dir, f"{model_name}.pth")
-            torch.save(model.state_dict(), save_path)
-
-    def load_model(self, load_dir="models"):
-        for idx, model in enumerate(self.models):
-            model_name = f"{model.__class__.__name__}_{idx + 1}"
-            
-            load_path = os.path.join(load_dir, f"{model_name}.pth")
-            
-            if os.path.exists(load_path):
-                model.load_state_dict(torch.load(load_path), map_location='cpu', weights_only=True)
             else:
                 print(f"Model file {load_path} does not exist!")
 
@@ -240,15 +195,27 @@ class DE_framework_Augmenting(nn.Module):
             else:
                 print(f"Model file {load_path} does not exist!")
 
+def count_parameters(model):
+    num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    if num_params > 1e3 and num_params < 1e6:
+        num_params = f'{num_params/1e3:.2f}K'
+    elif num_params > 1e6:
+        num_params = f'{num_params/1e6:.2f}M'
+    return num_params
+
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Training")
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
     args = parser.parse_args()
-    t = torch.rand(4, 10, 1, 224, 224).to(device='cuda:1')
-    net = DE_framework_mem(args, models=[UNet_logvar(num_classes = 4, max_channels=256),
-                                            DeepLabV3P_logvar(num_classes = 4, max_channels=256)]).to(device=t.device)
-    pred = net(t)
+    t = torch.rand(1, 30, 224, 224).to(device='cuda:1')
+    valid_mask = torch.cat([torch.ones(11, dtype=torch.bool), torch.zeros(30 - 11, dtype=torch.bool)]).unsqueeze(0)
+    net = DE_framework_mem(args, models=[UNet_linear(num_classes = 4, max_channels=256)]).to(device=t.device)
+    pred = net(t,valid_mask)
     print(pred.size())
+    print(count_parameters(net))
+    # from fvcore.nn import FlopCountAnalysis
+    # flops = FlopCountAnalysis(net, (t, valid_mask))
+    # print(f"FLOPs: {flops.total()}")
 

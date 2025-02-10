@@ -1,0 +1,7 @@
+{"time":"2025-02-10T14:35:31.845788882+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.4","symlink path":"/data2/lyw/deunet_mem_based/utils/wandb/run-20250210_143531-nuvtr1sm/logs/debug-core.log"}
+{"time":"2025-02-10T14:35:32.352114068+08:00","level":"INFO","msg":"created new stream","id":"nuvtr1sm"}
+{"time":"2025-02-10T14:35:32.352172988+08:00","level":"INFO","msg":"stream: started","id":"nuvtr1sm"}
+{"time":"2025-02-10T14:35:32.352238788+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"nuvtr1sm"}
+{"time":"2025-02-10T14:35:32.352324528+08:00","level":"INFO","msg":"handler: started","stream_id":"nuvtr1sm"}
+{"time":"2025-02-10T14:35:32.352342948+08:00","level":"INFO","msg":"sender: started","stream_id":"nuvtr1sm"}
+{"time":"2025-02-10T14:35:32.707067594+08:00","level":"INFO","msg":"Starting system monitor"}

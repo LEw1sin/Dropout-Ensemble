@@ -20,3 +20,4 @@ config: {'device': 'cuda:7', 'channel_weights': [1.0, 2.0, 1.0, 1.0], 'batch_siz
 2025-02-07 14:38:14,792 INFO    MainThread:3325638 [wandb_run.py:_redirect():2324] Wrapping output streams.
 2025-02-07 14:38:14,792 INFO    MainThread:3325638 [wandb_run.py:_redirect():2349] Redirects installed.
 2025-02-07 14:38:14,796 INFO    MainThread:3325638 [wandb_init.py:init():1009] run started, returning control to user process
+2025-02-08 12:12:35,216 WARNING MsgRouterThr:3325638 [router.py:message_loop():75] message_loop has been closed

@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from .tools import uncertainty_weights
 
 class InvertedResidual(nn.Module):
     def __init__(self, inp, oup, stride, expand_ratio):
@@ -284,52 +283,3 @@ class DeepLabV3P_linear(nn.Module):
 
         return result
     
-
-class DeepLabV3P_logvar(nn.Module):
-    def __init__(self, num_classes, input_channel=1, downsample_factor=16, max_channels=256):
-        super(DeepLabV3P_logvar, self).__init__()
-        self.backbone = MobileNetV2(num_classes = num_classes, input_channel=input_channel, downsample_factor=downsample_factor)
-        self.aspp = ASPP(dim_in=512, dim_out=max_channels,
-                         rate=16//downsample_factor)
-        
-        self.shortcut_conv = nn.Sequential(
-            nn.Conv2d(24, 48, 1),
-            nn.BatchNorm2d(48),
-            nn.ReLU(inplace=True),
-        )
-        self.cat_conv = nn.Sequential(
-            nn.Conv2d(48+256, 256, 3, stride=1, padding=1),
-            nn.BatchNorm2d(256),
-            nn.ReLU(inplace=True),
-
-            nn.Conv2d(256, 256, 3, stride=1, padding=1),
-            nn.BatchNorm2d(256),
-            nn.ReLU(inplace=True),
-        )
-        self.cls_conv = nn.Conv2d(256, num_classes, 1, stride=1)
-        # self.dropout = nn.Dropout(0.5)
-        self.uncertainty_weights = uncertainty_weights(num_classes, max_channels)
-
-    def forward(self, x):
-        H, W = x.size(2), x.size(3)
-        low_level_features, x1 = self.backbone(x)
-        x2 = self.aspp(x1)
-
-        # x2 = self.dropout(x2)
-        uncertainty_weights = self.uncertainty_weights(x2)
-        low_level_features_new = self.shortcut_conv(low_level_features)
-
-        x3 = F.interpolate(x2, size=(low_level_features_new.size(
-            2), low_level_features_new.size(3)), mode='bilinear', align_corners=True)
-        x4 = self.cat_conv(torch.cat((x3, low_level_features_new), dim=1))
-        x5 = self.cls_conv(x4)
-        result = F.interpolate(x5, size=(H, W), mode='bilinear', align_corners=True)
-
-        return result, uncertainty_weights
-
-    
-if __name__ == "__main__":
-    t = torch.rand(4, 1, 224, 224)
-    net = DeepLabV3P_linear(num_classes = 14, input_channel=1)
-    pred = net(t)
-    print(pred.size())

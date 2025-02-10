@@ -7,9 +7,9 @@ import logging
 from tqdm import tqdm
 from torch.utils.data import DataLoader
 from utils.metrics import *
-from model.DE_framework import DE_framework_linear, DE_framework_logvar, DE_framework_mem
-from model.unet import UNet_linear, UNet_logvar
-from model.deeplabv3_plus import DeepLabV3P_linear, DeepLabV3P_logvar
+from model.DE_framework import DE_framework_linear, DE_framework_mem
+from model.unet import UNet_linear
+from model.deeplabv3_plus import DeepLabV3P_linear
 from utils.initialize import *
 from torch.optim import lr_scheduler
 import argparse
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     dir_path = os.path.dirname(file_path)
     os.chdir(dir_path)
     parser = argparse.ArgumentParser(description="Training")
-    parser.add_argument('--device', default='cuda:7', type=str, help='device to use for training / testing')
+    parser.add_argument('--device', default='cuda:1', type=str, help='device to use for training / testing')
     parser.add_argument('--channel_weights', nargs='+', type=float, default=[1.0, 2.0, 1.0, 1.0], help='Channel weights')
     parser.add_argument('--batch_size', default=8, type=int, help='input batch size for training')
     parser.add_argument('--num_classes', default=4, type=int, help='number of classes')
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     parser.add_argument('--l2_norm', default=1e-7, type=float, help='the coefficient of l2 norm')
     parser.add_argument('--patience', default=15, type=float, help='the patience of early stop')
     parser.add_argument('--wandb', default=True, type=bool, help='whether to use wandb')
-    parser.add_argument('--cache', default=True, type=bool, help='whether to load the dataset into memory')
+    parser.add_argument('--cache', default=False, type=bool, help='whether to load the dataset into memory')
     parser.add_argument('--ed_es_only', default='', type=str, help='test on ED or ES slices only')
     args = parser.parse_args()
 

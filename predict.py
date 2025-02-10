@@ -4,9 +4,9 @@ import torch.nn.functional as F
 import logging
 from tqdm import tqdm
 from utils.metrics import *
-from model.unet import UNet_linear, UNet_logvar
-from model.deeplabv3_plus import DeepLabV3P_linear, DeepLabV3P_logvar
-from model.DE_framework import DE_framework_linear, DE_framework_logvar, DE_framework_mem, DE_framework_Augmenting
+from model.unet import UNet_linear
+from model.deeplabv3_plus import DeepLabV3P_linear
+from model.DE_framework import DE_framework_linear, DE_framework_mem, DE_framework_Augmenting
 from model.tools import dense_crf
 import argparse
 import os

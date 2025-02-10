@@ -51,17 +51,3 @@ def dense_crf(probs, n_classes, img=None, n_iters=10,
     preds = np.array(Q, dtype=np.float32).reshape((n_classes, h, w))
     return preds
 
-class uncertainty_weights(nn.Module):
-    def __init__(self, num_classes, max_channels=256):
-        super(uncertainty_weights, self).__init__()
-        self.max_channels = max_channels
-        self.logvar_layer = nn.Conv2d(self.max_channels, num_classes, kernel_size=1)
-        # self.channel_layer = nn.Sequential(
-        #     nn.Conv2d(max_channels, max_channels // 4, kernel_size=1),
-        #     nn.Conv2d(max_channels // 4, num_classes, kernel_size=1)
-        # )
-    def forward(self, x):
-        logvar = self.logvar_layer(x)
-
-        channel_weights = torch.amax(logvar, dim=(2, 3), keepdim=True)
-        return channel_weights

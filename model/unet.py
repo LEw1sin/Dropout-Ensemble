@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from .tools import uncertainty_weights
 
 class DoubleConv(nn.Module):
     """(convolution => [BN] => ReLU) * 2"""
@@ -124,60 +123,3 @@ class UNet_linear(nn.Module):
         logits = self.outc(x)
 
         return logits
-
-class UNet_logvar(nn.Module):
-    def __init__(self, num_classes, bilinear=True, max_channels=256, input_channel=1):
-        super(UNet_logvar, self).__init__()
-        self.n_channels = input_channel
-        self.num_classes = num_classes
-        self.bilinear = bilinear
-        self.max_channels = max_channels
-
-        self.inc = DoubleConv(self.n_channels, self.max_channels//8)
-        self.down1 = Down(self.max_channels//8, self.max_channels//4)
-        self.down2 = Down(self.max_channels//4, self.max_channels//2)
-        self.down3 = Down(self.max_channels//2, self.max_channels)
-        self.down4 = Down(self.max_channels, self.max_channels)
-        self.dropout = nn.Dropout(0.5)
-        self.up1 = Up(self.max_channels*2, self.max_channels//2, self.bilinear)
-        self.up2 = Up(self.max_channels, self.max_channels//4, self.bilinear)
-        self.up3 = Up(self.max_channels//2, self.max_channels//8, self.bilinear)
-        self.up4 = Up(self.max_channels//4, self.max_channels//8, self.bilinear)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
-        self.outc = OutConv(self.max_channels//8, self.num_classes)
-        self.uncertainty_weights = uncertainty_weights(self.num_classes, self.max_channels)
-
-        self._initialize_weights()
-
-    def _initialize_weights(self):
-        for m in self.modules():
-            if isinstance(m, nn.Conv2d):
-                n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
-                m.weight.data.normal_(0, math.sqrt(2. / n))
-            elif isinstance(m, nn.BatchNorm2d):
-                m.weight.data.fill_(1)
-                m.bias.data.zero_()
-
-    def forward(self, x):
-        x1 = self.inc(x)
-        x2 = self.down1(x1)
-        x3 = self.down2(x2) 
-        x4 = self.down3(x3) 
-        x5 = self.down4(x4)
-        
-        x5 = self.dropout(x5)
-        uncertainty_weights = self.uncertainty_weights(x5)
-
-        x = self.up1(x5, x4)
-        x = self.up2(x, x3)
-        x = self.up3(x, x2)
-        x = self.up4(x, x1)
-        logits = self.outc(x)
-
-        return logits, uncertainty_weights
-
-
-if __name__ == "__main__":
-    t = torch.rand(4, 1, 224, 224).to('cuda:5')
-    net = UNet_logvar(num_classes = 4, input_channel=1).to(device=t.device)
-    pred = net(t)
-    print(pred.size())
