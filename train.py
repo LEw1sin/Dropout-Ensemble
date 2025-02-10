@@ -191,9 +191,9 @@ if __name__ == "__main__":
     #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)])
     # net = DE_framework_linear(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
     #                                         DeepLabV3P_linear(num_classes = args.num_classes, max_channels=args.max_channel)], weight_list=[0.7,0.3])
-    net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
-                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe),
-                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channe)])
+    net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
+                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel),
+                                            UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel)])
     
     args.log_dir = get_log_dir(net, args.dataset_mode)
     args.log_file_path = os.path.join(args.log_dir, "training.log")
