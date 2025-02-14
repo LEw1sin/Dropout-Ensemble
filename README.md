@@ -1,6 +1,6 @@
 # I. Clarity
 
-It is the code repository of our paper ["*Memory-based Ensemble Learning in CMR Semantic Segmentation*"](https://arxiv.org/abs/2502.09269).
+It is the code repository of our paper [*Memory-based Ensemble Learning in CMR Semantic Segmentation*](https://arxiv.org/abs/2502.09269).
 
 # II. Usage
 
@@ -162,7 +162,7 @@ parser.add_argument('--net_weights', default='../../de_logistics/ACDC_4UNetlinea
 net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel), UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel), UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel), UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel)])
 ```
 
-IV. Citation
+# IV. Citation
 ```
 @misc{liu2025memorybasedensemblelearningcmr,
       title={Memory-based Ensemble Learning in CMR Semantic Segmentation}, 
