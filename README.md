@@ -1,6 +1,6 @@
 # I. Clarity
 
-It is the code repository of our paper [*Memory-based Ensemble Learning in CMR Semantic Segmentation*](https://arxiv.org/abs/2502.09269).
+It is the code repository of our paper *Memory-based Ensemble Learning in CMR Semantic Segmentation*.
 
 # II. Usage
 
@@ -160,17 +160,4 @@ net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes,
 ```
 parser.add_argument('--net_weights', default='../../de_logistics/ACDC_4UNetlinear_Uncertainty', type=str, help='net weights path')
 net = DE_framework_mem(args, models=[UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel), UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel), UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel), UNet_linear(num_classes = args.num_classes, max_channels=args.max_channel)])
-```
-
-# IV. Citation
-```
-@misc{liu2025memorybasedensemblelearningcmr,
-      title={Memory-based Ensemble Learning in CMR Semantic Segmentation}, 
-      author={Yiwei Liu and Ziyi Wu and Liang Zhong and Linyi Wen and Yuankai Wu},
-      year={2025},
-      eprint={2502.09269},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2502.09269}, 
-}
 ```
